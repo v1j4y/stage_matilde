@@ -41,7 +41,7 @@ jupyter: python3
 The Nickel-Oxide compound is a linear compound and 
 has the following electronic structure shown in @fig-ni1. 
 The two valence orbitals i.e. $d_{z^2}$ and
-$d_{x^2-y^2}$ are singly occupied and quasi degenerate. 
+$d_{x^2-y^2}$ are singly occupied and quasi degenerate [@guiherydouble2003]. 
 
 ![Valence electronic structure of Ni(II) ion in 
 the [Ni~2~(napy)~4~Br~2~] compound.](ni_orb_scheme.png){#fig-ni1}
@@ -55,12 +55,14 @@ of electrons therefore, render this compund a suitable
 candidate for spintronics applications.
 
 The model frequently used to describe such molecules
-is known as the Double Exchange model as shown in @eq-de1.
+is known as the Double Exchange model (DE)[@chilkuri_high-spin_2016] as shown in @eq-de1.
 
 $$
-\hat{H} = \sum_i 2K \hat{S}_{ai}\cdot \hat{S}_{bi} + 
-\sum_{<ij>} \hat{S}_{ai}\cdot\hat{S}_{aj} \delta_{ni,nj} +
-\sum_{<ij>} t \left ( \hat{a}^{\dagger}_{ai}\cdot\hat{a}_{aj}\delta_{ni(ni+1)} + h.c.\right )
+\hat{H}_{DE} = -\sum_i 2K \left(  \hat{S}_{ai}\cdot \hat{S}_{bi} 
+-\frac{\mathbb{1}}{4}\right ) \delta_{ni,2} - 
+\sum_{\braket{ij}} 2J \left(  \hat{S}_{ai}\cdot\hat{S}_{aj} 
+-\frac{\mathbb{1}}{4} \right) \delta_{ni,nj} +
+\sum_{\braket{ij}} t \left ( \hat{a}^{\dagger}_{ai}\cdot\hat{a}_{aj}\delta_{ni(ni+1)} + h.c.\right )
 $$ {#eq-de1}
 
 Sophisticated models also include the long-range 
@@ -69,23 +71,36 @@ in the Pariser-Parr-Pople (PPP) hamiltonians called $V_{ij}$.
 This is a diagonal operator and is written as shown in @eq-de2.
 
 $$
-\hat{H} = \sum_i 2K \hat{S}_{ai}\cdot \hat{S}_{bi} + 
-\sum_{<ij>} \hat{S}_{ai}\cdot\hat{S}_{aj} \delta_{ni,nj} +
-\sum_{<ij>} t \left ( \hat{a}^{\dagger}_{ai}\cdot\hat{a}_{aj}\delta_{ni(ni+1)} + h.c.\right ) +
-\sum_{ij} V_{ij} \hat{n}_{ai}\cdot \hat{n}_{bj} 
+\hat{H}_{PPP} = \hat{H}_{DE} +
+\sum_{\braket{ij}} V_{ij} \hat{n}_{i}\cdot \hat{n}_{j} 
 $$ {#eq-de2}
 
 Along with these two models, one can simulate collective
 properties of the linear chain nickel-oxide compounds.
 
-These interactions are shown schematically in @fig-ni2.
 
 ![A schematic of the different interactions in the double-exchange
 model hamiltonian.](ni_chain_three_sites.png){#fig-ni2}
 
-As shown in @fig-ni2, each site represents one nickel atom.
-Since the compound can be doped with positive charges, each
-nickel atom can have either two or one electron as shown in @fig-ni2.
+These interactions are shown schematically in @fig-ni2,
+where each site represents one nickel atom. Since the compound 
+can be doped with positive charges, each nickel atom can have 
+either two or one electron as shown in @fig-ni2.
+The 30 states of this model can be subdivided into two 
+family of states:
+
+1. Family 1, where the hole (i.e. the empty orbital)
+resides in an orbital of type $1$ (i.e. the $a_1$ or $d_{z^2}$ orbital).
+2. Family 2, where the hole resides in an orbital of type $2$.
+
+The two family of states do not interact with each other due
+to symmetry. In the DE model, we shall study the states
+belonging to Family 1 only because the ground state and few
+low lying excited states belong to this family as shown in @fig-ni3.
+
+![Comparison of the relative energies of the states belonging
+to Family 1 and Family 2.](de_fam1_fam2.png){#fig-ni3}
+
 In the present work, we shall investigate the collective
 properties of linear chanins of variable lengths and 
 doping ratios.
@@ -158,6 +173,84 @@ given in @tbl-de2.
 The matrix for the ms 0 spin-block.
 :::
 
+### Physical meaning of model parameters
+
+The coulomb parameter $J$ represents the inter-site 
+anti-ferromagnetic coupling between the electrons
+occupying the $d_{z^2}$ orbital on each site ($a_1$, $a_2$).
+This interaction shown schematically in
+table @tbl-de3 for two sites.
+
+
+::: {#tbl-de3}
+```{=latex}
+\begin{tabular}{@{}c!{\vrule width 1.25pt}cc@{}}
+    $\hat{H}_{J}$&$\ket{a_1\bar{a}_2}$&$\ket{\bar{a}_1a_2}$\\
+%   \toprule
+    \noalign{\hrule height 1.25pt}
+    
+    $\bra{a_1\bar{a}_2}$&$ J$&$-J$    \\[10pt]
+    $\bra{\bar{a}_1a_2}$&$-J$&$ J$    \\[10pt]
+    
+\end{tabular}%
+```
+The $J$ block of the matrix for two electrons in two sites.
+:::
+
+Therefore, a negative value of $J$ stabilizes the singlet 
+state by $2J$ compared to the triplet state.
+
+::: {#tbl-de4}
+```{=latex}
+\begin{tabular}{@{}c!{\vrule width 1.25pt}cc@{}}
+    $E$&$\ket{a_1\bar{a}_2}$&$\ket{\bar{a}_1a_2}$\\
+%   \toprule
+    \noalign{\hrule height 1.25pt}
+    
+    $(S=1) 0$&$\frac{1}{\sqrt{2}}$&$\frac{1}{\sqrt{2}}$    \\[10pt]
+    $(S=0)2J$&$\frac{1}{\sqrt{2}}$&$-\frac{1}{\sqrt{2}}$    \\[10pt]
+    
+\end{tabular}%
+```
+The eigenvalues and eigenvectors of the matrix for $J$.
+:::
+
+Similarly, the exchange term $K$ exists between the 
+two orbitals on the _same_ site ($a$, $b$) as shown in @tbl-de5. 
+This results in the separation of the _local_ singlet and triplet
+configurations on each site. The $K$ interaction stabilises
+the triplet configuration by $2K$ compared to the 
+local singlet configuration (@tbl-de6).
+
+::: {#tbl-de5}
+```{=latex}
+\begin{tabular}{@{}c!{\vrule width 1.25pt}cc@{}}
+    $\hat{H}_{K}$&$\ket{a\bar{b}}$&$\ket{\bar{a}b}$\\
+%   \toprule
+    \noalign{\hrule height 1.25pt}
+    
+    $\bra{a\bar{b}}$&$ K$&$-K$    \\[10pt]
+    $\bra{\bar{a}b}$&$-K$&$ K$    \\[10pt]
+    
+\end{tabular}%
+```
+The $K$ block of the matrix for two electrons on the _same_ site.
+:::
+
+::: {#tbl-de6}
+```{=latex}
+\begin{tabular}{@{}c!{\vrule width 1.25pt}cc@{}}
+    $E$&$\ket{a\bar{b}}$&$\ket{\bar{a}b}$\\
+%   \toprule
+    \noalign{\hrule height 1.25pt}
+    
+    $(S=0)2K$&$\frac{1}{\sqrt{2}}$&$-\frac{1}{\sqrt{2}}$   \\[10pt]
+    $(S=1) 0$&$\frac{1}{\sqrt{2}}$&$\frac{1}{\sqrt{2}}$    \\[10pt]
+    
+\end{tabular}%
+```
+The eigenvalues and eigenvectors of the matrix for $K$.
+:::
 
 ## Results and discussion
 
